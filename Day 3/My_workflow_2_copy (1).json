@@ -1,0 +1,216 @@
+{
+  "name": "My workflow 2 copy",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "423cdc48-b4c2-45d3-8b10-9fc660167127",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17O9kRbOGZyLL8Kmuz5wQjsWDLo4C2cOJSyvrHoEmkEE",
+          "mode": "list",
+          "cachedResultName": "mom-project (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17O9kRbOGZyLL8Kmuz5wQjsWDLo4C2cOJSyvrHoEmkEE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 513526536,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17O9kRbOGZyLL8Kmuz5wQjsWDLo4C2cOJSyvrHoEmkEE/edit#gid=513526536"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "0dfeaeb5-731f-426c-b372-6537106ac168",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "xh2EcFkcAw7T5ifL",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"task\": \"Prepare Report\",\n  \"email\": \"alice@example.com\",\n  \"deadline\": \"2025-06-12\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "102c778e-509a-406a-8d13-4371205888be",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "aysha.m.ihub@snsgroups.com",
+        "subject": "=New Task Assigned: {{ $json[\"task\"] }}",
+        "message": "=Hello,  You’ve been assigned a new task:  Task: {{ $json[\"task\"] }} Deadline: {{ $json[\"deadline\"] }}  Please take action accordingly.  Regards,   Project Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        80
+      ],
+      "id": "c73d8a8a-c578-451b-9291-5da5824e112f",
+      "name": "Gmail",
+      "webhookId": "b2700ed5-6730-48b5-a638-5de3c8763ddd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "PTbd5xle8bsC4rMT",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "aysha.m.ihub@snsgroups.com",
+          "mode": "list",
+          "cachedResultName": "aysha.m.ihub@snsgroups.com"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        840,
+        0
+      ],
+      "id": "08bc38ab-7276-4659-9e5d-e27c0fc532e2",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "cWfDbQijk5fmvcBX",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "417de579-b840-46f1-adf9-37acebf16500",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1060,
+        0
+      ],
+      "id": "5be91f6b-db30-48ed-b29f-3da9627ad005",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1ddfc552-6526-4c42-883b-3feeeb333848",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0c2eb8fb8410713e2cbdcbc8a9d7ff43d22fd31bbc2bb61324e0f67477a59c8b"
+  },
+  "id": "vLoERuWfybwlRny5",
+  "tags": []
+}
