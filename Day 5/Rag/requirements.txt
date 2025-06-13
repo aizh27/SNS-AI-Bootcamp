@@ -1,17 +1,19 @@
 # Streamlit UI
-streamlit>=1.32.0
+streamlit==1.32.0
 
-# LangChain Core & Community
+# LangChain & community integrations
 langchain==0.1.16
 langchain-community==0.0.35
-
-# Google Gemini LLM via LangChain wrapper
 langchain-google-genai==0.0.9
+
+# Google Gemini
 google-generativeai==0.3.2
 
 # PDF reading
 pypdf==3.17.1
 
-# Embeddings + Vectorstore
-sentence-transformers==2.7.0
+# HuggingFace embeddings
+sentence-transformers==2.2.2
+
+# FAISS (NOTE: many versions break in Streamlit Cloud, keep this minimal)
 faiss-cpu==1.7.4
